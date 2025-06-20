@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Course LMS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f9fa;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 25px;
+            color: #333;
+            font-weight: 600;
+        }
+        .login-container .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .login-container .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        .login-container .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .login-container .input-group input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+        .login-container button:active {
+            transform: translateY(0);
+        }
+        .login-container .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #d9534f; /* Red for errors, green for success */
+        }
+        .login-container .links {
+            margin-top: 20px;
+        }
+        .login-container .links a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-container .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p class="message" id="loginMessage"></p>
+        </form>
+        <div class="links">
+            Don't have an account? <a href="register.html">Register here</a>
+        </div>
+    </div>
+    <script src="js/login.js"></script>
+</body>
+</html> 

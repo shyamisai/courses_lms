@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - A2000 Solutions</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0; 
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 12px 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1><i class="fas fa-shield-alt"></i> Admin Dashboard - A2000 Solutions</h1>
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+    
+    <div class="admin-container">
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div class="stat-number" id="totalUsers">-</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-graduation-cap"></i>
+                <div class="stat-number" id="totalCourses">-</div>
+                <div class="stat-label">Total Courses</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user-graduate"></i>
+                <div class="stat-number" id="totalStudents">-</div>
+                <div class="stat-label">Students</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <div class="stat-number" id="totalInstructors">-</div>
+                <div class="stat-label">Instructors</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('users')">
+                <i class="fas fa-users"></i> User Management
+            </button>
+            <button class="tab" onclick="showTab('courses')">
+                <i class="fas fa-book"></i> Course Management
+            </button>
+            <button class="tab" onclick="showTab('add-course')">
+                <i class="fas fa-plus"></i> Add Course
+            </button>
+        </div>
+        
+        <div class="tab-content">
+            <div id="message" class="message" style="display: none;"></div>
+            
+            <!-- User Management Tab -->
+            <div id="users" class="content-section active">
+                <h2><i class="fas fa-users"></i> User Management</h2>
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                                <th>Courses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="6" class="loading">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Course Management Tab -->
+            <div id="courses" class="content-section">
+                <h2><i class="fas fa-book"></i> Course Management</h2>
+                <div class="table-container">
+                    <table id="coursesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="6" class="loading">Loading courses...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Add Course Tab -->
+            <div id="add-course" class="content-section">
+                <h2><i class="fas fa-plus"></i> Add New Course</h2>
+                <form id="addCourseForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseTitle">Course Title</label>
+                            <input type="text" id="courseTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseAuthor">Author</label>
+                            <input type="text" id="courseAuthor" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseImage">Image Path</label>
+                            <input type="text" id="courseImage" placeholder="images/course-image.jpg" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseRating">Rating</label>
+                            <input type="number" id="courseRating" min="0" max="5" step="0.1" value="5.0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailPage">Detail Page (optional)</label>
+                        <input type="text" id="detailPage" placeholder="course-detail.html">
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for managing courses -->
+    <div id="courseModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:9999; align-items:center; justify-content:center;">
+      <div style="background:#fff; border-radius:12px; max-width:400px; width:90vw; margin:auto; padding:2rem; position:relative; box-shadow:0 8px 32px rgba(44,62,80,0.18);">
+        <h3 id="modalTitle">Manage Courses for User</h3>
+        <form id="courseAssignForm">
+          <div id="courseCheckboxes" style="max-height:300px; overflow-y:auto; margin-bottom:1.5rem;"></div>
+          <div style="text-align:right;">
+            <button type="button" class="btn btn-danger" id="closeModalBtn">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Edit Course Modal -->
+    <div id="editCourseModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span id="closeEditCourseModal" class="close">&times;</span>
+        <h3>Edit Course</h3>
+        <form id="editCourseForm">
+          <input type="hidden" id="editCourseId">
+          <div class="form-group">
+            <label for="editCourseTitle">Course Title</label>
+            <input type="text" id="editCourseTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="editCourseAuthor">Author</label>
+            <input type="text" id="editCourseAuthor" required>
+          </div>
+          <div class="form-group">
+            <label for="editCourseImage">Image Path</label>
+            <input type="text" id="editCourseImage" required>
+          </div>
+          <div class="form-group">
+            <label for="editCourseRating">Rating</label>
+            <input type="number" id="editCourseRating" min="0" max="5" step="0.1" required>
+          </div>
+          <div style="text-align:right;">
+            <button type="button" class="btn btn-secondary" id="cancelEditCourseBtn">Cancel</button>
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <script src="js/admin.js"></script>
+</body>
+</html> 

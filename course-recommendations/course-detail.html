@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="course-detail-bg">
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo-link"><img src="images/a2000-logo.png" alt="A2000 Logo" class="logo"></a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="index.html" class="active">Courses</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile" tabindex="0" aria-label="User Profile">
+                <span id="userInfo"></span>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="course-detail-card modern-card">
+            <h1 id="course-title" style="display:none;"></h1>
+            <div id="course-error-message" style="display:none; text-align:center; color:#d9534f; font-size:1.2rem; margin-bottom:1.5rem;">
+                <p>Sorry, we couldn't find this course. It may have been removed or the link is incorrect.</p>
+                <a href="index.html" class="btn btn-learn" style="margin-top:1em;">Back to Courses</a>
+            </div>
+            <!-- Video Card -->
+            <section id="yt-section"></section>
+            <!-- Course Banner and Info -->
+            <div class="course-banner modern-banner">
+                <img src="images/ai-foundations.jpg" alt="Course Banner" class="course-banner-img modern-banner-img">
+                <div class="course-banner-overlay modern-banner-overlay">
+                    <h2 class="banner-title modern-banner-title">AI Foundations</h2>
+                </div>
+            </div>
+            <!-- Tags/Chips -->
+            <div class="course-tags modern-tags">
+                <span class="tag">AI</span>
+                <span class="tag">Beginner</span>
+                <span class="tag">English</span>
+            </div>
+            <!-- Progress Bar -->
+            <div class="progress-bar-container modern-progress-bar">
+                <div class="progress-bar" style="width: 40%"></div>
+                <span class="progress-label">40% completed</span>
+            </div>
+            <!-- Instructor Card -->
+            <div class="instructor-card modern-instructor-card">
+                <img src="images/a2000-logo.png" alt="Instructor Photo" class="instructor-photo modern-instructor-photo">
+                <div class="instructor-info modern-instructor-info">
+                    <div class="instructor-name modern-instructor-name">Dr. Jane Smith</div>
+                    <div class="instructor-bio modern-instructor-bio">AI researcher and educator with 10+ years of experience in machine learning and data science.</div>
+                </div>
+            </div>
+            <!-- Modules and Lessons Section -->
+            <section id="modules-lessons-section" class="modules-lessons-section modern-modules-section">
+                <h2 style="display:flex;align-items:center;gap:0.7em;">
+                    <span aria-label="Animated Modules Icon" style="display:inline-flex;align-items:center;">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-bounce" aria-hidden="true">
+                            <rect x="4" y="20" width="24" height="6" rx="2" fill="#6366f1"/>
+                            <rect x="8" y="12" width="16" height="6" rx="2" fill="#a5b4fc"/>
+                            <rect x="12" y="4" width="8" height="6" rx="2" fill="#fff">
+                                <animate attributeName="y" values="4;2;4" dur="1.1s" repeatCount="indefinite"/>
+                            </rect>
+                        </svg>
+                    </span>
+                    Modules
+                </h2>
+                <div id="modules-list"></div>
+                <button id="add-module-btn" class="btn btn-primary" style="display:none; margin-top:1em;">Add Module</button>
+                <!-- Add Module Modal -->
+                <div id="add-module-modal" class="modal" style="display:none;">
+                  <div class="modal-content">
+                    <span id="close-add-module-modal" class="close">&times;</span>
+                    <h3>Add Module</h3>
+                    <form id="add-module-form">
+                      <label for="module-title-input">Module Title</label>
+                      <input type="text" id="module-title-input" required style="width:100%;margin-bottom:1em;">
+                      <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                  </div>
+                </div>
+            </section>
+            <!-- Lessons Section Header with Animated Icon -->
+            <div class="modules-lessons-section">
+                <h3 style="display:flex;align-items:center;gap:0.7em;">
+                    <span aria-label="Animated Lesson Icon" style="display:inline-flex;align-items:center;">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-pulse" aria-hidden="true">
+                            <rect x="4" y="20" width="20" height="2" rx="1" fill="#e0e7ff"/>
+                            <rect x="8" y="8" width="12" height="8" rx="2" fill="#fff"/>
+                            <rect x="12" y="4" width="4" height="12" rx="1.5" fill="#6366f1">
+                                <animate attributeName="height" values="12;16;12" dur="1.2s" repeatCount="indefinite"/>
+                            </rect>
+                            <rect x="13" y="6" width="2" height="8" rx="1" fill="#a5b4fc"/>
+                        </svg>
+                    </span>
+                    Lessons
+                </h3>
+                <!-- ...rest of lessons section... -->
+            </div>
+            <div id="lesson-content-modal" class="lesson-content-modal" style="display:none;">
+                <div class="lesson-content-modal-inner">
+                    <button id="close-lesson-modal" class="btn btn-secondary" style="float:right;">Close</button>
+                    <div id="lesson-content-display"></div>
+                </div>
+            </div>
+            <!-- Module Modal -->
+            <div id="module-modal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span id="close-module-modal" class="close">&times;</span>
+                    <h3 id="module-modal-title">Add Module</h3>
+                    <form id="module-form">
+                        <input type="hidden" id="module-id">
+                        <label>Title: <input type="text" id="module-title" required></label><br>
+                        <label>Description:<br>
+                            <textarea id="module-description" rows="3" style="width:100%;"></textarea>
+                        </label><br>
+                        <label>Order: <input type="number" id="module-order" value="0" required></label><br>
+                        <label>Release Date (YYYY-MM-DD HH:MM): <input type="text" id="module-release-date" placeholder="2025-06-19 12:00"></label><br>
+                        <button type="submit" class="btn btn-primary">Save Module</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Lesson Modal -->
+            <div id="lesson-modal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span id="close-lesson-edit-modal" class="close">&times;</span>
+                    <h3 id="lesson-modal-title">Add Lesson</h3>
+                    <form id="lesson-form">
+                        <input type="hidden" id="lesson-id">
+                        <input type="hidden" id="lesson-module-id">
+                        <label>Title: <input type="text" id="lesson-title" required></label><br>
+                        <label>Order: <input type="number" id="lesson-order" value="0"></label><br>
+                        <label>Content Type:
+                            <select id="lesson-content-type" required>
+                                <option value="text">Text</option>
+                                <option value="video">Video (YouTube/Vimeo URL)</option>
+                                <option value="pdf">PDF (URL)</option>
+                            </select>
+                        </label><br>
+                        <label>Content:<br>
+                            <textarea id="lesson-content" rows="4" cols="40" required></textarea>
+                        </label><br>
+                        <label>Release Date (YYYY-MM-DD HH:MM): <input type="text" id="lesson-release-date" placeholder="2025-06-19 12:00"></label><br>
+                        <button type="submit" class="btn btn-primary">Save Lesson</button>
+                    </form>
+                </div>
+            </div>
+            <section id="course-info" class="course-info-card modern-course-info">
+                <!-- Course info will be loaded here -->
+            </section>
+            <section id="course-files" class="course-files-section modern-files-section">
+                <h2>Course Files & Resources</h2>
+                <form id="file-upload-form" style="display:none; margin-bottom:1rem;">
+                    <input type="file" id="file-input" name="file" required>
+                    <button type="submit" class="btn btn-primary">Upload File</button>
+                    <span id="upload-status" style="margin-left:1rem;"></span>
+                </form>
+                <ul id="file-list" class="file-list">
+                    <!-- Files will be listed here -->
+                </ul>
+            </section>
+        </section>
+    </main>
+    <script src="js/course-detail.js"></script>
+</body>
+</html> 
